@@ -21,20 +21,35 @@ func NewDashboard() *Dashboard {
 	}
 }
 
-func (db *Dashboard) AddTierRef(level int) {
-	db.TierRefMap[level] = NewTierRef()
+func (db *Dashboard) AddTier(tier int) {
+	db.TierValMap[tier] = NewTierVal()
+	if (tier % 2) == 1 {
+		db.TierRefMap[tier] = NewTierRef()
+	}
 }
 
-func (db *Dashboard) AddTierVal(level int) {
-	db.TierValMap[level] = NewTierVal()
-}
+// func (db *Dashboard) AddTierRef(tier int) {
+// 	db.TierRefMap[tier] = NewTierRef()
+// }
+//
+// func (db *Dashboard) AddTierVal(tier int) {
+// 	db.TierValMap[tier] = NewTierVal()
+// }
 
 func (db *Dashboard) AddRef(tier, listID int) {
+	if (tier % 2) == 0 {
+		fmt.Println("Cant add ref map on even tier", tier)
+		return
+	}
 	db.TierRefMap[tier].RefMap[listID] = make(map[int]Target)
 }
 
-func (db *Dashboard) ModRef(tier, listID, key int, value Target) {
-	db.TierRefMap[tier].RefMap[listID][key] = value
+func (db *Dashboard) ModRef(tier, listID, key int, target Target) {
+	if (tier % 2) == 0 {
+		fmt.Println("Cant mod ref map on even tier", tier)
+		return
+	}
+	db.TierRefMap[tier].RefMap[listID][key] = target
 }
 
 func (db *Dashboard) ModVal(tier, key int, value interface{}) {
@@ -59,22 +74,24 @@ func (db *Dashboard) Load(fname string) {
 }
 
 func (db *Dashboard) Print() {
-	fmt.Printf("dashboard %v\n", db)
+	fmt.Printf("dashboard %+v\n", db)
 	fmt.Println()
 	fmt.Println("TierRefMap")
-	for k := range db.TierRefMap {
-		fmt.Printf("T%v:\n", k)
+	fmt.Println("----------")
+	for k1 := range db.TierRefMap {
+		fmt.Printf("T%v:\n", k1)
 		// fmt.Println()
 		fmt.Println("  RefMap")
-		for k := range db.TierRefMap[k].RefMap {
-			fmt.Printf("    list id: %v\n", k)
-			for k, v := range db.TierRefMap[k].RefMap[k] {
-				fmt.Printf("      k: %v v: %v\n", k, v)
+		for k2 := range db.TierRefMap[k1].RefMap {
+			fmt.Printf("    list id: %v\n", k2)
+			for k3, v3 := range db.TierRefMap[k1].RefMap[k2] {
+				fmt.Printf("      k: %v v: %v\n", k3, v3)
 			}
 		}
 		fmt.Println()
 	}
 	fmt.Println("TierValMap")
+	fmt.Println("----------")
 	for k := range db.TierValMap {
 		fmt.Printf("T%v:\n", k)
 		fmt.Println("  ValMap")
@@ -82,6 +99,7 @@ func (db *Dashboard) Print() {
 			fmt.Printf("    k: %v v: %v type: %T\n", k, v, v)
 		}
 	}
+	fmt.Println()
 }
 
 func (db *Dashboard) SaveGob(filePath string) {

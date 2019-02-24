@@ -29,9 +29,9 @@ db[n+1]:
 // n=0
 // T0
 // T0 val map:
-map[ 1: dude1;
-     2: dude2;
-     3: dude3; ]
+map[ 1: dude A;
+     2: dude B;
+     3: dude C; ]
 
 // T0 ref map:
 none: n=0
