@@ -15,23 +15,28 @@ func main() {
 
 	db := stuffdb.NewDashboard()
 
-	db.AddTier(0)
-	db.ModVal(0, 1, "Dude A")
-	db.ModVal(0, 2, "Dude B")
-	db.ModVal(0, 3, "Dude C")
+	tier := 0
+	db.AddTier(tier)
+	db.ModVal(tier, 1, "Dude A")
+	db.ModVal(tier, 2, "Dude B")
+	db.ModVal(tier, 3, "Dude C")
+	db.ModVal(tier, 4, 666)
 
-	db.AddTier(1)
-	db.ModVal(1, 1, "Dudes")
-	db.ModVal(1, 2, "Friends")
+	tier = 1
+	db.AddTier(tier)
+	db.ModVal(tier, 1, "Dudes")
+	db.ModVal(tier, 2, "Friends")
 
-	db.AddRef(1, 1)
-	db.ModRef(1, 1, 1, stuffdb.Target{Tier: 0, List: 1}) //add functions
-	db.ModRef(1, 1, 2, stuffdb.Target{Tier: 0, List: 2})
-	db.ModRef(1, 1, 3, stuffdb.Target{Tier: 0, List: 3})
+	listID := 1
+	db.AddRef(tier, listID)
+	db.ModRef(tier, listID, 1, 0, 1) //add functions
+	db.ModRef(tier, listID, 2, 0, 2)
+	db.ModRef(tier, listID, 3, 0, 3)
 
-	db.AddRef(1, 2)
-	db.ModRef(1, 2, 1, stuffdb.Target{Tier: 0, List: 2})
-	db.ModRef(1, 2, 2, stuffdb.Target{Tier: 0, List: 3})
+	listID = 2
+	db.AddRef(tier, listID)
+	db.ModRef(tier, listID, 1, 0, 2)
+	db.ModRef(tier, listID, 2, 0, 3)
 
 	db.Print()
 
@@ -44,5 +49,12 @@ func main() {
 	dbs.Load("db")
 
 	dbs.Print()
+
+	fmt.Println("Save GOB:")
+	db.SaveGob("db")
+	var dbsg = new(stuffdb.Dashboard)
+	fmt.Println("Load GOB:")
+	dbsg.LoadGob("db")
+	dbsg.Print()
 
 }

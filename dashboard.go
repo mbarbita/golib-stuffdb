@@ -44,12 +44,13 @@ func (db *Dashboard) AddRef(tier, listID int) {
 	db.TierRefMap[tier].RefMap[listID] = make(map[int]Target)
 }
 
-func (db *Dashboard) ModRef(tier, listID, key int, target Target) {
+func (db *Dashboard) ModRef(tier, listID, key, targetTier, targetList int) {
 	if (tier % 2) == 0 {
 		fmt.Println("Cant mod ref map on even tier", tier)
 		return
 	}
-	db.TierRefMap[tier].RefMap[listID][key] = target
+	db.TierRefMap[tier].RefMap[listID][key] =
+		Target{Tier: targetTier, List: targetList}
 }
 
 func (db *Dashboard) ModVal(tier, key int, value interface{}) {
