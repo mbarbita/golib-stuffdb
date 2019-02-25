@@ -1,12 +1,25 @@
 package main
 
 import (
+	"encoding/gob"
 	"fmt"
 	"os"
 	"os/exec"
+	"reflect"
 
-	"github.com/mbarbita/golib-stuffdb"
+	stuffdb "github.com/mbarbita/golib-stuffdb"
 )
+
+func do(i interface{}) {
+	switch v := i.(type) {
+	case int:
+		fmt.Printf("Twice %v is %v\n", v, v*2)
+	case string:
+		fmt.Printf("%q is %v bytes long\n", v, len(v))
+	default:
+		fmt.Printf("I don't know about type %T!\n", v)
+	}
+}
 
 func main() {
 	c := exec.Command("cmd", "/c", "cls")
@@ -20,7 +33,16 @@ func main() {
 	db.ModVal(tier, 1, "Dude A")
 	db.ModVal(tier, 2, "Dude B")
 	db.ModVal(tier, 3, "Dude C")
-	db.ModVal(tier, 4, 666)
+
+	// test int
+	db.ModVal(tier, 4, 666.2)
+
+	//test map
+	tm := make(map[int]int)
+	for i := 1; i <= 10; i++ {
+		tm[i] = i + 10
+	}
+	db.ModVal(tier, 5, tm)
 
 	tier = 1
 	db.AddTier(tier)
@@ -48,9 +70,21 @@ func main() {
 	var dbs = new(stuffdb.Dashboard)
 	dbs.Load("db")
 
+	//reflect
+	fmt.Println("reflect:", reflect.TypeOf(dbs.TierValMap[0].ValMap[4]))
+	rfv := reflect.ValueOf(dbs.TierValMap[0].ValMap[4])
+	fmt.Println("reflect val:", rfv.Float())
+	fmt.Printf("int: %v\n", int(rfv.Float()))
+
+	do(int(rfv.Float()))
+
 	dbs.Print()
 
 	fmt.Println("Save GOB:")
+
+	gob.Register(stuffdb.Dashboard{})
+	gob.Register(tm)
+
 	db.SaveGob("db")
 	var dbsg = new(stuffdb.Dashboard)
 	fmt.Println("Load GOB:")

@@ -104,7 +104,7 @@ func (db *Dashboard) Print() {
 }
 
 func (db *Dashboard) SaveGob(filePath string) {
-	gob.Register(Dashboard{})
+	// gob.Register(Dashboard{})
 	// gob.Register(Stuff{})
 	file, err := os.Create(filePath + ".gob")
 	defer file.Close()
@@ -121,7 +121,7 @@ func (db *Dashboard) SaveGob(filePath string) {
 }
 
 func (db *Dashboard) LoadGob(filePath string) {
-	gob.Register(Dashboard{})
+	// gob.Register(Dashboard{})
 	file, err := os.Open(filePath + ".gob")
 	defer file.Close()
 	if err == nil {
