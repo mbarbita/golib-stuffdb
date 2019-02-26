@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"reflect"
 
 	stuffdb "github.com/mbarbita/golib-stuffdb"
 )
@@ -16,6 +15,8 @@ func do(i interface{}) {
 		fmt.Printf("Twice %v is %v\n", v, v*2)
 	case string:
 		fmt.Printf("%q is %v bytes long\n", v, len(v))
+	case map[int]int:
+		fmt.Printf("map[int]int: %v\n", v)
 	default:
 		fmt.Printf("I don't know about type %T!\n", v)
 	}
@@ -71,12 +72,11 @@ func main() {
 	dbs.Load("db")
 
 	//reflect
-	fmt.Println("reflect:", reflect.TypeOf(dbs.TierValMap[0].ValMap[4]))
-	rfv := reflect.ValueOf(dbs.TierValMap[0].ValMap[4])
-	fmt.Println("reflect val:", rfv.Float())
-	fmt.Printf("int: %v\n", int(rfv.Float()))
-
-	do(int(rfv.Float()))
+	// fmt.Println("reflect:", reflect.TypeOf(dbs.TierValMap[0].ValMap[4]))
+	// rfv := reflect.ValueOf(dbs.TierValMap[0].ValMap[4])
+	// fmt.Println("reflect val:", rfv.Float())
+	// fmt.Printf("int: %v\n", int(rfv.Float()))
+	// do(int(rfv.Float()))
 
 	dbs.Print()
 
@@ -90,5 +90,7 @@ func main() {
 	fmt.Println("Load GOB:")
 	dbsg.LoadGob("db")
 	dbsg.Print()
+
+	do((dbsg.TierValMap[0].ValMap[5]).(map[int]int))
 
 }
