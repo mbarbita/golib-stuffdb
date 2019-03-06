@@ -52,7 +52,7 @@ func main() {
 
 	listID := 1
 	db.AddRef(tier, listID)
-	db.ModRef(tier, listID, 1, 0, 1) //add functions
+	db.ModRef(tier, listID, 1, 0, 1)
 	db.ModRef(tier, listID, 2, 0, 2)
 	db.ModRef(tier, listID, 3, 0, 3)
 
