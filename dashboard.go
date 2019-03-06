@@ -28,14 +28,6 @@ func (db *Dashboard) AddTier(tier int) {
 	}
 }
 
-// func (db *Dashboard) AddTierRef(tier int) {
-// 	db.TierRefMap[tier] = NewTierRef()
-// }
-//
-// func (db *Dashboard) AddTierVal(tier int) {
-// 	db.TierValMap[tier] = NewTierVal()
-// }
-
 func (db *Dashboard) AddRef(tier, listID int) {
 	if (tier % 2) == 0 {
 		fmt.Println("Cant add ref map on even tier", tier)
@@ -61,16 +53,15 @@ func (db *Dashboard) Save(fname string) {
 	//Save
 	fmt.Println("save obj:", db)
 	if err := storestruct.Save(fname+".json", db); err != nil {
-		log.Fatalln(err)
+		log.Println("save json obj err:", err)
 	}
 }
 
 func (db *Dashboard) Load(fname string) {
 	// load
 	fmt.Println("load obj:", db)
-	// var dbs = new(Dashboard)
 	if err := storestruct.Load(fname+".json", db); err != nil {
-		log.Fatalln(err)
+		log.Panicln("load json obj err", err)
 	}
 }
 
@@ -112,11 +103,11 @@ func (db *Dashboard) SaveGob(filePath string) {
 		encoder := gob.NewEncoder(file)
 		err := encoder.Encode(db)
 		if err != nil {
-			fmt.Println("gob encode error:", err)
+			log.Println("encode gob error:", err)
 		}
 	}
 	if err != nil {
-		fmt.Println("gob save error:", err)
+		log.Println("save gob error:", err)
 	}
 }
 
@@ -128,10 +119,10 @@ func (db *Dashboard) LoadGob(filePath string) {
 		decoder := gob.NewDecoder(file)
 		err := decoder.Decode(db)
 		if err != nil {
-			fmt.Println("gob decode error:", err)
+			log.Println("decode gob error:", err)
 		}
 	}
 	if err != nil {
-		fmt.Println("gob load error:", err)
+		log.Println("load gob error:", err)
 	}
 }

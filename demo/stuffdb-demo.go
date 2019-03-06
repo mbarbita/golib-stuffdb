@@ -12,13 +12,13 @@ import (
 func do(i interface{}) {
 	switch v := i.(type) {
 	case int:
-		fmt.Printf("Twice %v is %v\n", v, v*2)
+		fmt.Printf("int: %v is %T\n", v, v)
 	case string:
-		fmt.Printf("%q is %v bytes long\n", v, len(v))
+		fmt.Printf("string: %q is %T\n", v, v)
 	case map[int]int:
-		fmt.Printf("map[int]int: %v\n", v)
+		fmt.Printf("map[int]int: %v is %T\n", v, v)
 	default:
-		fmt.Printf("I don't know about type %T!\n", v)
+		fmt.Printf("unhandeled type: %v is %T\n", v, v)
 	}
 }
 
@@ -91,6 +91,10 @@ func main() {
 	dbsg.LoadGob("db")
 	dbsg.Print()
 
+	fmt.Println("DO:------------------")
+	do(666)
+	do(666.6)
+	do("666.666")
 	do((dbsg.TierValMap[0].ValMap[5]).(map[int]int))
 
 }
