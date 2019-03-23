@@ -3,7 +3,6 @@ package stuffdb
 import "fmt"
 
 type TierRef struct {
-	Name   string
 	RefMap map[int]map[int]Target
 }
 
@@ -16,7 +15,7 @@ func NewTierRef() *TierRef {
 func (tr *TierRef) Print() {
 	// fmt.Println("  RefMap:")
 	for k1 := range tr.RefMap {
-		fmt.Printf("  tier ref name: %v k(ID): %v\n", tr.Name, k1)
+		fmt.Printf("  tier ref k(ID): %v\n", k1)
 		for k2, v2 := range tr.RefMap[k1] {
 			fmt.Printf("    ref k: %v v: %v\n", k2, v2)
 		}
