@@ -30,27 +30,42 @@ func main() {
 	db := stuffdb.NewDashboard()
 
 	tier := 0
+	dataMapID := 0
 	db.AddTier(tier)
-	db.ModVal(tier, 1, "Dude A")
-	db.ModVal(tier, 2, "Dude B")
-	db.ModVal(tier, 3, "Dude C")
+	db.AddData(tier, dataMapID)
+	db.ModData(tier, dataMapID, 1, "Dude A")
+	db.ModData(tier, dataMapID, 2, "Dude B")
+	db.ModData(tier, dataMapID, 3, "Dude C")
 
 	// test int
-	db.ModVal(tier, 4, 666.2)
+	dataMapID = 1
+	db.AddData(tier, dataMapID)
+	db.ModData(tier, dataMapID, 1, 666.2)
 
 	//test map
+	dataMapID = 2
 	tm := make(map[int]int)
 	for i := 1; i <= 10; i++ {
 		tm[i] = i + 10
 	}
-	db.ModVal(tier, 5, tm)
+	db.AddData(tier, dataMapID)
+	db.ModData(tier, dataMapID, 1, tm)
+
+	dataMapID = 3
+	db.AddData(tier, dataMapID)
+	// db.AddData(tier, dataMapID)
+	db.ModData(tier, dataMapID, 1, "Dudes")
+	db.ModData(tier, dataMapID, 2, "Friends")
+
+	dataMapID = 4
+	a := "\n"
+	db.AddData(tier, dataMapID)
+	db.ModData(tier, dataMapID, 1, []string{"slice",
+		"of", "strings", "and \" stuff", a, "世界"})
 
 	tier = 1
-	db.AddTier(tier)
-	db.ModVal(tier, 1, "Dudes")
-	db.ModVal(tier, 2, "Friends")
-
 	listID := 1
+	db.AddTier(tier)
 	db.AddRef(tier, listID)
 	db.ModRef(tier, listID, 1, 0, 1)
 	db.ModRef(tier, listID, 2, 0, 2)
@@ -95,6 +110,6 @@ func main() {
 	do(666)
 	do(666.6)
 	do("666.666")
-	do((dbsg.TierValMap[0].ValMap[5]).(map[int]int))
+	// do((dbsg.TierValMap[0].ValMap[5]).(map[int]int))
 
 }

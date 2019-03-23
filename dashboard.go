@@ -10,43 +10,57 @@ import (
 )
 
 type Dashboard struct {
-	TierRefMap map[int]*TierRef
-	TierValMap map[int]*TierVal
+	TierRefMap  map[int]*TierRef
+	TierDataMap map[int]*TierData
 }
 
 func NewDashboard() *Dashboard {
 	return &Dashboard{
-		TierRefMap: make(map[int]*TierRef),
-		TierValMap: make(map[int]*TierVal),
+		TierRefMap:  make(map[int]*TierRef),
+		TierDataMap: make(map[int]*TierData),
 	}
 }
 
 func (db *Dashboard) AddTier(tier int) {
-	db.TierValMap[tier] = NewTierVal()
+	if (tier % 2) == 0 {
+		db.TierDataMap[tier] = NewTierData()
+	}
 	if (tier % 2) == 1 {
 		db.TierRefMap[tier] = NewTierRef()
 	}
 }
 
-func (db *Dashboard) AddRef(tier, listID int) {
+func (db *Dashboard) AddRef(tier, refMapID int) {
 	if (tier % 2) == 0 {
-		fmt.Println("Cant add ref map on even tier", tier)
+		fmt.Println("cant add ref map on even tier", tier)
 		return
 	}
-	db.TierRefMap[tier].RefMap[listID] = make(map[int]Target)
+	db.TierRefMap[tier].RefMap[refMapID] = make(map[int]Target)
 }
 
-func (db *Dashboard) ModRef(tier, listID, key, targetTier, targetList int) {
+func (db *Dashboard) ModRef(tier, refMapID, key, targetTier, targetList int) {
 	if (tier % 2) == 0 {
-		fmt.Println("Cant mod ref map on even tier", tier)
+		fmt.Println("cant mod ref map on even tier", tier)
 		return
 	}
-	db.TierRefMap[tier].RefMap[listID][key] =
+	db.TierRefMap[tier].RefMap[refMapID][key] =
 		Target{Tier: targetTier, List: targetList}
 }
 
-func (db *Dashboard) ModVal(tier, key int, value interface{}) {
-	db.TierValMap[tier].ValMap[key] = value
+func (db *Dashboard) AddData(tier, dataMapID int) {
+	if (tier % 2) == 1 {
+		fmt.Println("cant add data map on odd tier", tier)
+		return
+	}
+	db.TierDataMap[tier].DataMap[dataMapID] = make(map[int]interface{})
+}
+
+func (db *Dashboard) ModData(tier, dataMapID, key int, value interface{}) {
+	if (tier % 2) == 1 {
+		fmt.Println("cant mod data map on odd tier", tier)
+		return
+	}
+	db.TierDataMap[tier].DataMap[dataMapID][key] = value
 }
 
 func (db *Dashboard) Save(fname string) {
@@ -72,24 +86,15 @@ func (db *Dashboard) Print() {
 	fmt.Println("----------")
 	for k1 := range db.TierRefMap {
 		fmt.Printf("T%v:\n", k1)
-		// fmt.Println()
-		fmt.Println("  RefMap")
-		for k2 := range db.TierRefMap[k1].RefMap {
-			fmt.Printf("    list id: %v\n", k2)
-			for k3, v3 := range db.TierRefMap[k1].RefMap[k2] {
-				fmt.Printf("      k: %v v: %v\n", k3, v3)
-			}
-		}
+		db.TierRefMap[k1].Print()
 		fmt.Println()
 	}
-	fmt.Println("TierValMap")
+	fmt.Println("TierDataMap")
 	fmt.Println("----------")
-	for k := range db.TierValMap {
-		fmt.Printf("T%v:\n", k)
-		fmt.Println("  ValMap")
-		for k, v := range db.TierValMap[k].ValMap {
-			fmt.Printf("    k: %v v: %v type: %T\n", k, v, v)
-		}
+	for k1 := range db.TierDataMap {
+		fmt.Printf("T%v:\n", k1)
+		db.TierDataMap[k1].Print()
+		fmt.Println()
 	}
 	fmt.Println()
 }
