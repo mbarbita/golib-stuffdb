@@ -110,6 +110,6 @@ func main() {
 	do(666)
 	do(666.6)
 	do("666.666")
-	// do((dbsg.TierValMap[0].ValMap[5]).(map[int]int))
+	do((dbsg.TierDataMap[0].DataMap[2][1]).(map[int]int))
 
 }
