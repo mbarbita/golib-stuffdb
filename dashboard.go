@@ -52,7 +52,18 @@ func (db *Dashboard) AddData(tier, dataMapID int) {
 		fmt.Println("cant add data map on odd tier", tier)
 		return
 	}
-	db.TierDataMap[tier].DataMap[dataMapID] = make(map[int]interface{})
+	// db.TierDataMap[tier].DataMap[dataMapID] = make(map[int]Data)
+	db.TierDataMap[tier].DataMap[dataMapID] = NewData()
+}
+
+func (db *Dashboard) ModDataName(tier, dataMapID int, name string) {
+	if (tier % 2) == 1 {
+		fmt.Println("cant add data map on odd tier", tier)
+		return
+	}
+	t := db.TierDataMap[tier].DataMap[dataMapID]
+	t.Name = name
+	db.TierDataMap[tier].DataMap[dataMapID] = t
 }
 
 func (db *Dashboard) ModData(tier, dataMapID, key int, value interface{}) {
@@ -60,7 +71,7 @@ func (db *Dashboard) ModData(tier, dataMapID, key int, value interface{}) {
 		fmt.Println("cant mod data map on odd tier", tier)
 		return
 	}
-	db.TierDataMap[tier].DataMap[dataMapID][key] = value
+	db.TierDataMap[tier].DataMap[dataMapID].IfcMap[key] = value
 }
 
 func (db *Dashboard) Save(fname string) {

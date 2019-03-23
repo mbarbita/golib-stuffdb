@@ -2,21 +2,33 @@ package stuffdb
 
 import "fmt"
 
+type Data struct {
+	Name   string
+	IfcMap map[int]interface{}
+}
+
 type TierData struct {
-	DataMap map[int]map[int]interface{}
+	DataMap map[int]Data
+}
+
+func NewData() Data {
+	return Data{
+		Name:   "",
+		IfcMap: make(map[int]interface{}),
+	}
 }
 
 func NewTierData() *TierData {
 	return &TierData{
-		DataMap: make(map[int]map[int]interface{}),
+		DataMap: make(map[int]Data),
 	}
 }
 
 func (td *TierData) Print() {
 	// fmt.Println("  DataMap:")
 	for k1 := range td.DataMap {
-		fmt.Printf("  tier data k(ID): %v\n", k1)
-		for k2, v2 := range td.DataMap[k1] {
+		fmt.Printf("  tier data name: %v k(ID): %v\n", td.DataMap[k1].Name, k1)
+		for k2, v2 := range td.DataMap[k1].IfcMap {
 			fmt.Printf("    data k: %+v v: %+v\n", k2, v2)
 		}
 	}

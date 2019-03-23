@@ -33,13 +33,16 @@ func main() {
 	dataMapID := 0
 	db.AddTier(tier)
 	db.AddData(tier, dataMapID)
+	db.ModDataName(tier, dataMapID, "Ppl")
 	db.ModData(tier, dataMapID, 1, "Dude A")
 	db.ModData(tier, dataMapID, 2, "Dude B")
 	db.ModData(tier, dataMapID, 3, "Dude C")
+	// db.ModDataName(tier, dataMapID, "Ppl")
 
 	// test int
 	dataMapID = 1
 	db.AddData(tier, dataMapID)
+	db.ModDataName(tier, dataMapID, "A number")
 	db.ModData(tier, dataMapID, 1, 666.2)
 
 	//test map
@@ -49,17 +52,19 @@ func main() {
 		tm[i] = i + 10
 	}
 	db.AddData(tier, dataMapID)
+	db.ModDataName(tier, dataMapID, "Some map")
 	db.ModData(tier, dataMapID, 1, tm)
 
 	dataMapID = 3
 	db.AddData(tier, dataMapID)
-	// db.AddData(tier, dataMapID)
+	db.ModDataName(tier, dataMapID, "Some cat")
 	db.ModData(tier, dataMapID, 1, "Dudes")
 	db.ModData(tier, dataMapID, 2, "Friends")
 
 	dataMapID = 4
 	a := "\n"
 	db.AddData(tier, dataMapID)
+	db.ModDataName(tier, dataMapID, "Stuff")
 	db.ModData(tier, dataMapID, 1, []string{"slice",
 		"of", "strings", "and \" stuff", a, "世界"})
 
@@ -110,6 +115,6 @@ func main() {
 	do(666)
 	do(666.6)
 	do("666.666")
-	do((dbsg.TierDataMap[0].DataMap[2][1]).(map[int]int))
+	do((dbsg.TierDataMap[0].DataMap[2].IfcMap[1]).(map[int]int))
 
 }
