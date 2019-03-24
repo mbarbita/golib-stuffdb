@@ -8,11 +8,11 @@ type Data struct {
 }
 
 type TierData struct {
-	DataMap map[int]Data
+	DataMap map[int]*Data
 }
 
-func NewData() Data {
-	return Data{
+func NewData() *Data {
+	return &Data{
 		Name:   "",
 		IfcMap: make(map[int]interface{}),
 	}
@@ -20,14 +20,14 @@ func NewData() Data {
 
 func NewTierData() *TierData {
 	return &TierData{
-		DataMap: make(map[int]Data),
+		DataMap: make(map[int]*Data),
 	}
 }
 
 func (td *TierData) Print() {
 	// fmt.Println("  DataMap:")
-	for k1 := range td.DataMap {
-		fmt.Printf("  tier data name: %v k(ID): %v\n", td.DataMap[k1].Name, k1)
+	for k1, v1 := range td.DataMap {
+		fmt.Printf("  data map k(ID): %v name: %v\n", k1, v1.Name)
 		for k2, v2 := range td.DataMap[k1].IfcMap {
 			fmt.Printf("    data k: %+v v: %+v\n", k2, v2)
 		}

@@ -61,9 +61,10 @@ func (db *Dashboard) ModDataName(tier, dataMapID int, name string) {
 		fmt.Println("cant add data map on odd tier", tier)
 		return
 	}
-	t := db.TierDataMap[tier].DataMap[dataMapID]
-	t.Name = name
-	db.TierDataMap[tier].DataMap[dataMapID] = t
+	// t := db.TierDataMap[tier].DataMap[dataMapID]
+	// t.Name = name
+	// db.TierDataMap[tier].DataMap[dataMapID] = t
+	db.TierDataMap[tier].DataMap[dataMapID].Name = name
 }
 
 func (db *Dashboard) ModData(tier, dataMapID, key int, value interface{}) {
