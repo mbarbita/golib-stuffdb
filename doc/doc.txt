@@ -1,62 +1,74 @@
 // tier n:
 db[n]:
 // Tn data map:
-    map[ [data map id]: value;... ]
+    map[ [data map id]: map[key]interface{};... ]
 // Tn ref map:
     map[ list id: map[id: taget(tier,list id);... ];... ]
 
-even tiers = data
-odd tiers = data and refs
-so target(tier, list id) knows what is there ([list id] refers to value map or
-ref map)
-db[n] contains only data map on even tiers and both maps on odd tiers
 
 // tier n+1
 db[n+1]:
 // Tn+1 data map:
-    map[ [data map id]: value;... ]
+    map[ [data map id]: data;... ]
 // Tn+1 ref map:
     map[ list id: map[id: taget(tier,list id);... ];... ]
 
 // tier n+2
 // Tn+2 data map:
-    map[ [data map id]: value;... ]
+    map[ [data map id]: data;... ]
 // Tn+2 ref map:
-    map[ list id: map[id: taget(tier,list id);... ];... ]
+    map[ list id: map[id: taget(tier,list id, selector);... ];... ]
 
 ...
 
 // n=0
 // T0
 // T0 data map:
-map[ 1: dude A;
-     2: dude B;
-     3: dude C; ]
+map[ 1: name: ppl
+        map[
+            0: dude A;
+            1: dude B;
+            2: dude C;
+           ];
+     2:...]
 
-// T0 ref map:
-none: n=0
+// T0 ref map: none
 
 // T1
-// T1 data map:
-map[ 1: dudes;
-     2: friends;]
+// T1 data map: none
 
 // T1 ref map:
-map[ 1: map[ 1: 0,1;
+map[ 1: name: dudes
+        map[
+             1: 0,1;
              2: 0,2;
-             3: 0,3;];
-     2: map[ 1: 0,2;
-             2: 0,3;];]
+             3: 0,3;
+           ];
+     2: name: friends
+        map[
+             1: 0,2;
+             2: 0,3;
+           ];
+    ]
 
 Target:
 struct {
-tier,
-map id,
+tier
+map id
 selector []string
 }
 
 selector
-if len(selector) = 0: data = none
+// [[R]<tier,mapID,<[nnn][:][ppp]>>] ...
+[[R]<[nnn][:][ppp]>] ...
+
+
+if R present: ref map
+if : present: range nnn to ppp
+if : not present: nnn = key
+
+
+if len(selector) = 0: data = all
 if len(selector) = 1 {
   if selector contains ":" { data = range[map[min]:map[max]]
     } else {
