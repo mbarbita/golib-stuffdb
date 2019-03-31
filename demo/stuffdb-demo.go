@@ -69,17 +69,19 @@ func main() {
 		"of", "strings", "and \" stuff", a, "世界"})
 
 	tier = 1
-	listID := 1
+	refMapID := 1
 	db.AddTier(tier)
-	db.AddRef(tier, listID)
-	db.ModRef(tier, listID, 1, 0, 1)
-	db.ModRef(tier, listID, 2, 0, 2)
-	db.ModRef(tier, listID, 3, 0, 3)
+	db.AddRef(tier, refMapID)
+	db.ModRefName(tier, refMapID, "Dudes")
+	db.ModRef(tier, refMapID, 1, 0, 1)
+	db.ModRef(tier, refMapID, 2, 0, 2)
+	db.ModRef(tier, refMapID, 3, 0, 3)
 
-	listID = 2
-	db.AddRef(tier, listID)
-	db.ModRef(tier, listID, 1, 0, 2)
-	db.ModRef(tier, listID, 2, 0, 3)
+	refMapID = 2
+	db.AddRef(tier, refMapID)
+	db.ModRefName(tier, refMapID, "Friends")
+	db.ModRef(tier, refMapID, 1, 0, 2)
+	db.ModRef(tier, refMapID, 2, 0, 3)
 
 	db.Print()
 

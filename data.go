@@ -25,7 +25,6 @@ func NewTierData() *TierData {
 }
 
 func (td *TierData) Print() {
-	// fmt.Println("  DataMap:")
 	for k1, v1 := range td.DataMap {
 		fmt.Printf("  data map k(ID): %v name: %v\n", k1, v1.Name)
 		for k2, v2 := range td.DataMap[k1].IfcMap {

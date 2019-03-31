@@ -1,26 +1,26 @@
 // tier n:
 db[n]:
-// Tn val map:
-    map[ [val map id]: value;... ]
+// Tn data map:
+    map[ [data map id]: value;... ]
 // Tn ref map:
     map[ list id: map[id: taget(tier,list id);... ];... ]
 
-even tiers = values
-odd tiers = values and refs
+even tiers = data
+odd tiers = data and refs
 so target(tier, list id) knows what is there ([list id] refers to value map or
 ref map)
-db[n] contains only val map on even tiers and both maps on odd tiers
+db[n] contains only data map on even tiers and both maps on odd tiers
 
 // tier n+1
 db[n+1]:
-// Tn+1 val map:
-    map[ [val map id]: value;... ]
+// Tn+1 data map:
+    map[ [data map id]: value;... ]
 // Tn+1 ref map:
     map[ list id: map[id: taget(tier,list id);... ];... ]
 
 // tier n+2
-// Tn+2 val map:
-    map[ [val map id]: value;... ]
+// Tn+2 data map:
+    map[ [data map id]: value;... ]
 // Tn+2 ref map:
     map[ list id: map[id: taget(tier,list id);... ];... ]
 
@@ -28,7 +28,7 @@ db[n+1]:
 
 // n=0
 // T0
-// T0 val map:
+// T0 data map:
 map[ 1: dude A;
      2: dude B;
      3: dude C; ]
@@ -37,7 +37,7 @@ map[ 1: dude A;
 none: n=0
 
 // T1
-// T1 val map:
+// T1 data map:
 map[ 1: dudes;
      2: friends;]
 
