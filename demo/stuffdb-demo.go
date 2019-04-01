@@ -37,6 +37,8 @@ func main() {
 	db.ModData(tier, dataMapID, 1, "Dude A")
 	db.ModData(tier, dataMapID, 2, "Dude B")
 	db.ModData(tier, dataMapID, 3, "Dude C")
+	db.ModData(tier, dataMapID, 4, "Dude D")
+
 	// db.ModDataName(tier, dataMapID, "Ppl")
 
 	// test int
@@ -46,27 +48,26 @@ func main() {
 	db.ModData(tier, dataMapID, 1, 666.2)
 
 	//test map
-	dataMapID = 2
 	tm := make(map[int]int)
 	for i := 1; i <= 10; i++ {
 		tm[i] = i + 10
 	}
+	dataMapID = 2
 	db.AddData(tier, dataMapID)
 	db.ModDataName(tier, dataMapID, "Some map")
 	db.ModData(tier, dataMapID, 1, tm)
 
-	dataMapID = 3
-	db.AddData(tier, dataMapID)
-	db.ModDataName(tier, dataMapID, "Some cat")
-	db.ModData(tier, dataMapID, 1, "Dudes")
-	db.ModData(tier, dataMapID, 2, "Friends")
+	// dataMapID = 3
+	// db.AddData(tier, dataMapID)
+	// db.ModDataName(tier, dataMapID, "Some cat")
+	// db.ModData(tier, dataMapID, 1, "Dudes")
+	// db.ModData(tier, dataMapID, 2, "Friends")
 
 	dataMapID = 4
-	a := "\n"
 	db.AddData(tier, dataMapID)
 	db.ModDataName(tier, dataMapID, "Stuff")
 	db.ModData(tier, dataMapID, 1, []string{"slice",
-		"of", "strings", "and \" stuff", a, "世界"})
+		"of", "strings", "and stuff", "\\ \"", "世界"})
 
 	tier = 1
 	refMapID := 1

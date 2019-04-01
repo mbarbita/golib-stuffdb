@@ -43,7 +43,8 @@ func (db *Dashboard) ModRefName(tier, refMapID int, name string) {
 		fmt.Println("cant mod ref map on even tier", tier)
 		return
 	}
-	db.TierRefMap[tier].RefMap[refMapID].Name = name
+	// db.TierRefMap[tier].RefMap[refMapID].Name = name
+	db.TierRefMap[tier].RefMap[refMapID].ModName(name)
 }
 
 func (db *Dashboard) ModRef(tier, refMapID, key, targetTier, targetList int) {
@@ -68,7 +69,8 @@ func (db *Dashboard) ModDataName(tier, dataMapID int, name string) {
 		fmt.Println("cant mod data map on odd tier", tier)
 		return
 	}
-	db.TierDataMap[tier].DataMap[dataMapID].Name = name
+	// db.TierDataMap[tier].DataMap[dataMapID].Name = name
+	db.TierDataMap[tier].DataMap[dataMapID].ModName(name)
 }
 
 func (db *Dashboard) ModData(tier, dataMapID, key int, value interface{}) {

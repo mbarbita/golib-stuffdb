@@ -18,6 +18,10 @@ func NewData() *Data {
 	}
 }
 
+func (d *Data) ModName(name string) {
+	d.Name = name
+}
+
 func NewTierData() *TierData {
 	return &TierData{
 		DataMap: make(map[int]*Data),
