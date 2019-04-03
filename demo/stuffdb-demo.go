@@ -34,18 +34,16 @@ func main() {
 	db.AddTierData(tier)
 	db.AddData(tier, dataMapID)
 	db.ModDataName(tier, dataMapID, "Ppl")
-	db.ModData(tier, dataMapID, 1, "Dude A")
-	db.ModData(tier, dataMapID, 2, "Dude B")
-	db.ModData(tier, dataMapID, 3, "Dude C")
-	db.ModData(tier, dataMapID, 4, "Dude D")
+	db.ModData(tier, dataMapID, 1, "Prs A")
+	db.ModData(tier, dataMapID, 2, "Prs B")
+	db.ModData(tier, dataMapID, 3, "Prs C")
+	db.ModData(tier, dataMapID, 4, "Prs D")
 
-	// test int
 	dataMapID = 1
 	db.AddData(tier, dataMapID)
 	db.ModDataName(tier, dataMapID, "A number")
 	db.ModData(tier, dataMapID, 1, 666.2)
 
-	//test map
 	tm := make(map[int]int)
 	for i := 1; i <= 10; i++ {
 		tm[i] = i + 10
@@ -54,12 +52,6 @@ func main() {
 	db.AddData(tier, dataMapID)
 	db.ModDataName(tier, dataMapID, "Some map")
 	db.ModData(tier, dataMapID, 1, tm)
-
-	// dataMapID = 3
-	// db.AddData(tier, dataMapID)
-	// db.ModDataName(tier, dataMapID, "Some cat")
-	// db.ModData(tier, dataMapID, 1, "Dudes")
-	// db.ModData(tier, dataMapID, 2, "Friends")
 
 	dataMapID = 4
 	db.AddData(tier, dataMapID)
@@ -75,16 +67,13 @@ func main() {
 	db.AddRef(tier, refMapID)
 	db.ModRefName(tier, refMapID, "Dudes")
 	db.AddTarget(tier, refMapID, 1, targetTier, targetMapID)
-	db.ModTarget(tier, refMapID, 1, targetTier, targetMapID, "1:3", "4")
-	// db.ModRef(tier, refMapID, 1, 0, 1)
-	// db.ModRef(tier, refMapID, 2, 0, 2)
-	// db.ModRef(tier, refMapID, 3, 0, 3)
+	db.ModTarget(tier, refMapID, 1, targetTier, targetMapID, "1:4")
 
 	refMapID = 2
 	db.AddRef(tier, refMapID)
 	db.ModRefName(tier, refMapID, "Friends")
-	// db.ModRef(tier, refMapID, 1, 0, 2)
-	// db.ModRef(tier, refMapID, 2, 0, 3)
+	db.AddTarget(tier, refMapID, 1, targetTier, targetMapID)
+	db.ModTarget(tier, refMapID, 1, targetTier, targetMapID, "4", "5")
 
 	db.Print()
 
