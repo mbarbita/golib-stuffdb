@@ -4,7 +4,7 @@ import "fmt"
 
 type Ref struct {
 	Name      string
-	TargetMap map[int]Target
+	TargetMap map[int]*Target
 }
 
 type TierRef struct {
@@ -14,7 +14,7 @@ type TierRef struct {
 func NewRef() *Ref {
 	return &Ref{
 		Name:      "",
-		TargetMap: make(map[int]Target),
+		TargetMap: make(map[int]*Target),
 	}
 }
 

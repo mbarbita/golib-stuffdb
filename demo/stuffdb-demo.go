@@ -69,18 +69,22 @@ func main() {
 
 	tier = 1
 	refMapID := 1
+	targetTier := 0
+	targetMapID := 0
 	db.AddTierRef(tier)
 	db.AddRef(tier, refMapID)
 	db.ModRefName(tier, refMapID, "Dudes")
-	db.ModRef(tier, refMapID, 1, 0, 1)
-	db.ModRef(tier, refMapID, 2, 0, 2)
-	db.ModRef(tier, refMapID, 3, 0, 3)
+	db.AddTarget(tier, refMapID, 1, targetTier, targetMapID)
+	db.ModTarget(tier, refMapID, 1, targetTier, targetMapID, "1:3", "4")
+	// db.ModRef(tier, refMapID, 1, 0, 1)
+	// db.ModRef(tier, refMapID, 2, 0, 2)
+	// db.ModRef(tier, refMapID, 3, 0, 3)
 
 	refMapID = 2
 	db.AddRef(tier, refMapID)
 	db.ModRefName(tier, refMapID, "Friends")
-	db.ModRef(tier, refMapID, 1, 0, 2)
-	db.ModRef(tier, refMapID, 2, 0, 3)
+	// db.ModRef(tier, refMapID, 1, 0, 2)
+	// db.ModRef(tier, refMapID, 2, 0, 3)
 
 	db.Print()
 

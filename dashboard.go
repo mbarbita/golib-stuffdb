@@ -37,13 +37,22 @@ func (db *Dashboard) ModRefName(tier, refMapID int, name string) {
 	db.TierRefMap[tier].RefMap[refMapID].ModName(name)
 }
 
-func (db *Dashboard) ModRef(tier, refMapID, key,
-	targetTier, targetMapID int) {
+func (db *Dashboard) AddTarget(tier, refMapID, key,
+	targetTier, targetMapID int, selector ...string) {
 	db.TierRefMap[tier].RefMap[refMapID].TargetMap[key] =
-		Target{
-			Tier:  targetTier,
-			MapID: targetMapID,
-		}
+		NewTarget(targetTier, targetMapID, selector...)
+}
+
+func (db *Dashboard) ModTarget(tier, refMapID, key,
+	targetTier, targetMapID int, selector ...string) {
+	db.TierRefMap[tier].RefMap[refMapID].TargetMap[key].Tier = tier
+	db.TierRefMap[tier].RefMap[refMapID].TargetMap[key].MapID = refMapID
+	db.TierRefMap[tier].RefMap[refMapID].TargetMap[key].Selector = selector
+	// db.TierRefMap[tier].RefMap[refMapID].TargetMap[key] =
+	// 	Target{
+	// 		Tier:  targetTier,
+	// 		MapID: targetMapID,
+	// 	}
 }
 
 func (db *Dashboard) AddData(tier, dataMapID int) {
