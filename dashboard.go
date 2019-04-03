@@ -21,63 +21,40 @@ func NewDashboard() *Dashboard {
 	}
 }
 
-func (db *Dashboard) AddTier(tier int) {
-	if (tier % 2) == 0 {
-		db.TierDataMap[tier] = NewTierData()
-	}
-	if (tier % 2) == 1 {
-		db.TierRefMap[tier] = NewTierRef()
-	}
+func (db *Dashboard) AddTierData(tier int) {
+	db.TierDataMap[tier] = NewTierData()
+}
+
+func (db *Dashboard) AddTierRef(tier int) {
+	db.TierRefMap[tier] = NewTierRef()
 }
 
 func (db *Dashboard) AddRef(tier, refMapID int) {
-	if (tier % 2) == 0 {
-		fmt.Println("cant add ref map on even tier", tier)
-		return
-	}
 	db.TierRefMap[tier].RefMap[refMapID] = NewRef()
 }
 
 func (db *Dashboard) ModRefName(tier, refMapID int, name string) {
-	if (tier % 2) == 0 {
-		fmt.Println("cant mod ref map on even tier", tier)
-		return
-	}
-	// db.TierRefMap[tier].RefMap[refMapID].Name = name
 	db.TierRefMap[tier].RefMap[refMapID].ModName(name)
 }
 
-func (db *Dashboard) ModRef(tier, refMapID, key, targetTier, targetList int) {
-	if (tier % 2) == 0 {
-		fmt.Println("cant mod ref map on even tier", tier)
-		return
-	}
+func (db *Dashboard) ModRef(tier, refMapID, key,
+	targetTier, targetMapID int) {
 	db.TierRefMap[tier].RefMap[refMapID].TargetMap[key] =
-		Target{Tier: targetTier, List: targetList}
+		Target{
+			Tier:  targetTier,
+			MapID: targetMapID,
+		}
 }
 
 func (db *Dashboard) AddData(tier, dataMapID int) {
-	if (tier % 2) == 1 {
-		fmt.Println("cant add data map on odd tier", tier)
-		return
-	}
 	db.TierDataMap[tier].DataMap[dataMapID] = NewData()
 }
 
 func (db *Dashboard) ModDataName(tier, dataMapID int, name string) {
-	if (tier % 2) == 1 {
-		fmt.Println("cant mod data map on odd tier", tier)
-		return
-	}
-	// db.TierDataMap[tier].DataMap[dataMapID].Name = name
 	db.TierDataMap[tier].DataMap[dataMapID].ModName(name)
 }
 
 func (db *Dashboard) ModData(tier, dataMapID, key int, value interface{}) {
-	if (tier % 2) == 1 {
-		fmt.Println("cant mod data map on odd tier", tier)
-		return
-	}
 	db.TierDataMap[tier].DataMap[dataMapID].IfcMap[key] = value
 }
 
@@ -93,7 +70,7 @@ func (db *Dashboard) Load(fname string) {
 	// load
 	fmt.Println("load obj:", db)
 	if err := storestruct.Load(fname+".json", db); err != nil {
-		log.Panicln("load json obj err", err)
+		log.Println("load json obj err", err)
 	}
 }
 

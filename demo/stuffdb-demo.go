@@ -31,15 +31,13 @@ func main() {
 
 	tier := 0
 	dataMapID := 0
-	db.AddTier(tier)
+	db.AddTierData(tier)
 	db.AddData(tier, dataMapID)
 	db.ModDataName(tier, dataMapID, "Ppl")
 	db.ModData(tier, dataMapID, 1, "Dude A")
 	db.ModData(tier, dataMapID, 2, "Dude B")
 	db.ModData(tier, dataMapID, 3, "Dude C")
 	db.ModData(tier, dataMapID, 4, "Dude D")
-
-	// db.ModDataName(tier, dataMapID, "Ppl")
 
 	// test int
 	dataMapID = 1
@@ -71,7 +69,7 @@ func main() {
 
 	tier = 1
 	refMapID := 1
-	db.AddTier(tier)
+	db.AddTierRef(tier)
 	db.AddRef(tier, refMapID)
 	db.ModRefName(tier, refMapID, "Dudes")
 	db.ModRef(tier, refMapID, 1, 0, 1)
@@ -93,13 +91,6 @@ func main() {
 	fmt.Println("Load:")
 	var dbs = new(stuffdb.Dashboard)
 	dbs.Load("db")
-
-	//reflect
-	// fmt.Println("reflect:", reflect.TypeOf(dbs.TierValMap[0].ValMap[4]))
-	// rfv := reflect.ValueOf(dbs.TierValMap[0].ValMap[4])
-	// fmt.Println("reflect val:", rfv.Float())
-	// fmt.Printf("int: %v\n", int(rfv.Float()))
-	// do(int(rfv.Float()))
 
 	dbs.Print()
 
