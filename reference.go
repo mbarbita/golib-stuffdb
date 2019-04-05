@@ -35,5 +35,6 @@ func (tr *TierRef) Print() {
 		for k2, v2 := range tr.RefMap[k1].TargetMap {
 			fmt.Printf("    ref k: %v v: %v\n", k2, v2)
 		}
+		fmt.Println()
 	}
 }

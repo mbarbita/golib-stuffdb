@@ -44,11 +44,16 @@ func main() {
 	db.ModDataName(tier, dataMapID, "A number")
 	db.ModData(tier, dataMapID, 1, 666.2)
 
+	dataMapID = 2
+	db.AddData(tier, dataMapID)
+	db.ModDataName(tier, dataMapID, "An int number")
+	db.ModData(tier, dataMapID, 1, 42)
+
 	tm := make(map[int]int)
 	for i := 1; i <= 10; i++ {
 		tm[i] = i + 10
 	}
-	dataMapID = 2
+	dataMapID = 3
 	db.AddData(tier, dataMapID)
 	db.ModDataName(tier, dataMapID, "Some map")
 	db.ModData(tier, dataMapID, 1, tm)
@@ -67,29 +72,29 @@ func main() {
 	db.AddRef(tier, refMapID)
 	db.ModRefName(tier, refMapID, "Dudes")
 	db.AddTarget(tier, refMapID, 1, targetTier, targetMapID)
-	db.ModTarget(tier, refMapID, 1, targetTier, targetMapID, "1:4")
+	db.ModTargetSelector(tier, refMapID, 1, "1:4")
 
 	refMapID = 2
 	db.AddRef(tier, refMapID)
 	db.ModRefName(tier, refMapID, "Friends")
 	db.AddTarget(tier, refMapID, 1, targetTier, targetMapID)
-	db.ModTarget(tier, refMapID, 1, targetTier, targetMapID, "4", "5")
+	db.ModTargetSelector(tier, refMapID, 1, "4", "5")
 
 	db.Print()
 
-	fmt.Println("Save:")
-	db.Save("db")
+	fmt.Println("Save JSON:")
+	db.SaveJSON("db")
 	fmt.Println()
 
-	fmt.Println("Load:")
+	fmt.Println("Load JSON:")
 	var dbs = new(stuffdb.Dashboard)
-	dbs.Load("db")
+	dbs.LoadJSON("db")
 
 	dbs.Print()
 
 	fmt.Println("Save GOB:")
 
-	gob.Register(stuffdb.Dashboard{})
+	// gob.Register(stuffdb.Dashboard{})
 	gob.Register(tm)
 
 	db.SaveGob("db")

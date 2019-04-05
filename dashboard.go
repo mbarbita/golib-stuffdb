@@ -43,16 +43,32 @@ func (db *Dashboard) AddTarget(tier, refMapID, key,
 		NewTarget(targetTier, targetMapID, selector...)
 }
 
-func (db *Dashboard) ModTarget(tier, refMapID, key,
-	targetTier, targetMapID int, selector ...string) {
+// func (db *Dashboard) ModTarget(tier, refMapID, key,
+// 	targetTier, targetMapID int, selector ...string) {
+// 	db.TierRefMap[tier].RefMap[refMapID].TargetMap[key].Tier = tier
+// 	db.TierRefMap[tier].RefMap[refMapID].TargetMap[key].MapID = refMapID
+// 	db.TierRefMap[tier].RefMap[refMapID].TargetMap[key].Selector = selector
+// }
+
+func (db *Dashboard) ModTargetTier(tier, refMapID, key,
+	targetTier int) {
 	db.TierRefMap[tier].RefMap[refMapID].TargetMap[key].Tier = tier
+	// db.TierRefMap[tier].RefMap[refMapID].TargetMap[key].MapID = refMapID
+	// db.TierRefMap[tier].RefMap[refMapID].TargetMap[key].Selector = selector
+}
+
+func (db *Dashboard) ModTargetMapID(tier, refMapID, key,
+	targetMapID int) {
+	// db.TierRefMap[tier].RefMap[refMapID].TargetMap[key].Tier = tier
 	db.TierRefMap[tier].RefMap[refMapID].TargetMap[key].MapID = refMapID
+	// db.TierRefMap[tier].RefMap[refMapID].TargetMap[key].Selector = selector
+}
+
+func (db *Dashboard) ModTargetSelector(tier, refMapID, key int,
+	selector ...string) {
+	// db.TierRefMap[tier].RefMap[refMapID].TargetMap[key].Tier = tier
+	// db.TierRefMap[tier].RefMap[refMapID].TargetMap[key].MapID = refMapID
 	db.TierRefMap[tier].RefMap[refMapID].TargetMap[key].Selector = selector
-	// db.TierRefMap[tier].RefMap[refMapID].TargetMap[key] =
-	// 	Target{
-	// 		Tier:  targetTier,
-	// 		MapID: targetMapID,
-	// 	}
 }
 
 func (db *Dashboard) AddData(tier, dataMapID int) {
@@ -67,7 +83,7 @@ func (db *Dashboard) ModData(tier, dataMapID, key int, value interface{}) {
 	db.TierDataMap[tier].DataMap[dataMapID].IfcMap[key] = value
 }
 
-func (db *Dashboard) Save(fname string) {
+func (db *Dashboard) SaveJSON(fname string) {
 	//Save
 	fmt.Println("save obj:", db)
 	if err := storestruct.Save(fname+".json", db); err != nil {
@@ -75,7 +91,7 @@ func (db *Dashboard) Save(fname string) {
 	}
 }
 
-func (db *Dashboard) Load(fname string) {
+func (db *Dashboard) LoadJSON(fname string) {
 	// load
 	fmt.Println("load obj:", db)
 	if err := storestruct.Load(fname+".json", db); err != nil {
@@ -91,20 +107,20 @@ func (db *Dashboard) Print() {
 	for k1 := range db.TierRefMap {
 		fmt.Printf("T%v:\n", k1)
 		db.TierRefMap[k1].Print()
-		fmt.Println()
+		// fmt.Println()
 	}
 	fmt.Println("TierDataMap")
-	fmt.Println("----------")
+	fmt.Println("-----------")
 	for k1 := range db.TierDataMap {
 		fmt.Printf("T%v:\n", k1)
 		db.TierDataMap[k1].Print()
-		fmt.Println()
+		// fmt.Println()
 	}
 	fmt.Println()
 }
 
 func (db *Dashboard) SaveGob(filePath string) {
-	// gob.Register(Dashboard{})
+	gob.Register(Dashboard{})
 	// gob.Register(Stuff{})
 	file, err := os.Create(filePath + ".gob")
 	defer file.Close()

@@ -26,9 +26,10 @@ db[n+1]:
 // T0 data map:
 map[ 1: name: ppl
         map[
-            0: dude A;
-            1: dude B;
-            2: dude C;
+            0: Prs A;
+            1: Prs B;
+            2: Prs C;
+            3: Prs D;
            ];
      2:...]
 
@@ -40,14 +41,11 @@ map[ 1: name: ppl
 // T1 ref map:
 map[ 1: name: dudes
         map[
-             1: 0,1;
-             2: 0,2;
-             3: 0,3;
+             1: 0,1,["0:3"];
            ];
      2: name: friends
         map[
-             1: 0,2;
-             2: 0,3;
+             1: 0,1,["2","3"];
            ];
     ]
 
@@ -59,26 +57,11 @@ selector []string
 }
 
 selector
-// [[R]<tier,mapID,<[nnn][:][ppp]>>] ...
-[[R]<[nnn][:][ppp]>] ...
+[<R>|<[nnn][:][ppp]>] ...
 
-
-if R present: ref map
-if : present: range nnn to ppp
-if : not present: nnn = key
-
-
-if len(selector) = 0: data = all
-if len(selector) = 1 {
-  if selector contains ":" { data = range[map[min]:map[max]]
-    } else {
-     key = val(selector), data = map[key] }
-  }
-
-if len(selector) > 1 {
-  if selector contain ":" {
-    data = enum of ranges
-    } else {
-    enum data = [map[sel1], map[sel2], map[sel3] ... ]
-    }
-  }
+assume data map unless "R" present
+if selector is empty or nil: all records
+if "R" present: ref map (all, no fragmentation)
+else
+if ":" present: range nnn to ppp
+if ":" not present: nnn = key

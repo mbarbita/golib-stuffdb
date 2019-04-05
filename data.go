@@ -30,9 +30,10 @@ func NewTierData() *TierData {
 
 func (td *TierData) Print() {
 	for k1, v1 := range td.DataMap {
-		fmt.Printf("  data map k(ID): %v name: %v\n", k1, v1.Name)
+		fmt.Printf("  data map k(ID): %v v(name): %v\n", k1, v1.Name)
 		for k2, v2 := range td.DataMap[k1].IfcMap {
-			fmt.Printf("    data k: %+v v: %+v\n", k2, v2)
+			fmt.Printf("    data k: %+v v: %+v type: %T\n", k2, v2, v2)
 		}
+		fmt.Println()
 	}
 }
